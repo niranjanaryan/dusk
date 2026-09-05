@@ -6,7 +6,7 @@ Zenoh **brokered** cluster for Elixir. Short name, horizon-at-sundown.
 gale   — Phoenix HTTP/3
 ingot  — Iroh + Zenoh
 dusk   — Zenoh + Iroh
-stow   — BLAKE3 / S3 / S5 storage
+orian  — BLAKE3 / S3 / S5 storage
 ```
 
 ```elixir
