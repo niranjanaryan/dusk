@@ -1,16 +1,17 @@
 defmodule Dusk do
   @moduledoc """
-  Zenoh **brokered** cluster for Elixir. Nodes are clients; `zenohd` is the broker.
+  Cluster over **Zenoh** (`zenohd`) and **Iroh** (iron / P2P QUIC).
 
-  Not HTTP (that is [Gale](https://github.com/niranjanaryan/gale)).
-  Not Iroh (that is [Ingot](https://github.com/niranjanaryan/ingot)).
-
-      {:dusk, "~> 0.1"}
-      {:zenohex, "~> 0.10"}
+  HTTP/3 is [Gale](https://github.com/niranjanaryan/gale).
+  Twin dual-overlay package: [Ingot](https://github.com/niranjanaryan/ingot).
 
       {Dusk, connect: "tcp/127.0.0.1:7447", key: "dusk/cluster/**"}
 
-  Zig NIF: `key_match/2`, `hash64/1`. Wire protocol: optional `zenohex`.
+      {Dusk, iroh: [alpns: ["dusk/1"]], zenoh: [connect: "tcp/127.0.0.1:7447"]}
+
+  Zig NIF: `key_match/2`, `hash64/1`, `blake3/1`, `xxh3/1`.
+  libcluster: `Dusk.Strategy.Zenoh`, `Dusk.Strategy.Iroh`.
+  FLAME: `Dusk.FLAME.Backend` with `overlay: :zenoh | :iroh | :both`.
   """
 
   defdelegate start_link(opts), to: Dusk.Cluster
@@ -22,6 +23,10 @@ defmodule Dusk do
 
   def hash64(bin) when is_binary(bin), do: Dusk.Native.hash64(bin)
 
+  def blake3(bin) when is_binary(bin), do: Dusk.Native.blake3(bin)
+
+  def xxh3(bin) when is_binary(bin), do: Dusk.Native.xxh3(bin)
+
   def nif_loaded? do
     Dusk.Native.key_match("a", "a") == true
   rescue
@@ -29,6 +34,10 @@ defmodule Dusk do
   end
 
   def backends do
-    %{zenoh: Dusk.Zenoh.available?(), zig_nif: nif_loaded?()}
+    %{
+      zenoh: Dusk.Zenoh.available?(),
+      iroh: Dusk.Iroh.available?(),
+      zig_nif: nif_loaded?()
+    }
   end
 end

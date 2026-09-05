@@ -1,18 +1,21 @@
 defmodule Dusk.FLAME.Backend do
   @moduledoc """
-  Phoenix **FLAME** backend with Zenoh membership overlay.
+  Phoenix **FLAME** backend with Zenoh and/or Iroh overlay.
 
       config :flame, :backend, {Dusk.FLAME.Backend,
+        overlay: :both,
         connect: "tcp/127.0.0.1:7447",
         key: "dusk/flame/runners"
       }
   """
 
   def init(opts) when is_list(opts) do
-    _ = start_zenoh(opts)
+    overlay = Keyword.get(opts, :overlay, :zenoh)
+    _ = start_overlay(overlay, opts)
 
     {:ok,
      %{
+       overlay: overlay,
        opts: opts,
        runner: nil,
        node: Node.self()
@@ -81,9 +84,26 @@ defmodule Dusk.FLAME.Backend do
     end
   end
 
+  defp start_overlay(:iroh, opts), do: start_iroh(opts)
+  defp start_overlay(:zenoh, opts), do: start_zenoh(opts)
+  defp start_overlay(:both, opts) do
+    start_iroh(opts)
+    start_zenoh(opts)
+  end
+
+  defp start_overlay(_, opts), do: start_overlay(:zenoh, opts)
+
+  defp start_iroh(opts) do
+    unless Process.whereis(Dusk.Iroh) do
+      Dusk.Iroh.start_link(alpns: Keyword.get(opts, :alpns, ["dusk/flame"]))
+    end
+  rescue
+    _ -> :ok
+  end
+
   defp start_zenoh(opts) do
     unless Process.whereis(Dusk.Zenoh) do
-      Dusk.Cluster.start_link(
+      Dusk.Zenoh.start_link(
         connect: Keyword.get(opts, :connect, "tcp/127.0.0.1:7447"),
         key: Keyword.get(opts, :key, "dusk/flame/runners"),
         live: Keyword.get(opts, :live, false)

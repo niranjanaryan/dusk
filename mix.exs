@@ -23,7 +23,7 @@ defmodule Dusk.MixProject do
 
   def application do
     [
-      extra_applications: [:logger],
+      extra_applications: [:logger, :crypto, :inets, :ssl, :public_key],
       mod: {Dusk.Application, []}
     ]
   end
@@ -39,14 +39,14 @@ defmodule Dusk.MixProject do
   end
 
   defp description do
-    "Zenoh brokered cluster for Elixir (zenohd). Iroh is ingot; HTTP/3 is gale."
+    "Zenoh + Iroh cluster for Elixir, BLAKE3/S5 and S3 storage. HTTP/3 is gale."
   end
 
   defp docs do
     [
       main: "Dusk",
       source_url: @source_url,
-      extras: ["README.md", "LICENSE", "CHANGELOG.md", "FUNDING.md"]
+      extras: ["README.md", "LICENSE", "CHANGELOG.md", "FUNDING.md", "HASH.md"]
     ]
   end
 
@@ -69,7 +69,7 @@ defmodule Dusk.MixProject do
         "Ingot" => "https://github.com/niranjanaryan/ingot"
       },
       files:
-        ~w(lib native/zig native/rust/src native/rust/Cargo.toml Makefile mix.exs README.md LICENSE CHANGELOG.md FUNDING.md .formatter.exs)
+        ~w(lib native/zig native/rust/src native/rust/Cargo.toml Makefile mix.exs README.md LICENSE CHANGELOG.md FUNDING.md HASH.md .formatter.exs)
     ]
   end
 end

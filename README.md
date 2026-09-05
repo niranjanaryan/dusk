@@ -4,8 +4,8 @@ Zenoh **brokered** cluster for Elixir. Short name, horizon-at-sundown.
 
 ```
 gale   — Phoenix HTTP/3
-ingot  — Iroh P2P QUIC
-dusk   — Zenoh + zenohd
+ingot  — Iroh + Zenoh
+dusk   — Zenoh + Iroh
 ```
 
 ```elixir
@@ -13,6 +13,8 @@ dusk   — Zenoh + zenohd
 {:zenohex, "~> 0.10"}
 
 {Dusk, connect: "tcp/127.0.0.1:7447", key: "dusk/cluster/**"}
+
+{Dusk, iroh: [alpns: ["dusk/1"]], zenoh: [connect: "tcp/127.0.0.1:7447"]}
 ```
 
 ```bash
@@ -36,5 +38,15 @@ config :libcluster,
 ## Phoenix FLAME
 
 ```elixir
-config :flame, :backend, {Dusk.FLAME.Backend, live: false}
+config :libcluster,
+  topologies: [
+    dusk_iroh: [strategy: Dusk.Strategy.Iroh, config: [alpns: ["dusk/1"]]]
+  ]
+
+config :flame, :backend, {Dusk.FLAME.Backend, overlay: :both, live: false}
 ```
+
+**Limits:** local spawn loop, not elastic FLAME (`FLAME.Terminator` /
+remote boot). Eval: [zeiroh/EVAL.md](../zeiroh/EVAL.md).
+
+Storage: `Dusk.Storage.put/2` (`:memory`, `:s3`, `:s5`). Hashes: [HASH.md](HASH.md).
