@@ -7,6 +7,8 @@ defmodule Dusk.FLAME.Backend do
         connect: "tcp/127.0.0.1:7447",
         key: "dusk/flame/runners"
       }
+
+  Local runner plus overlay advertise. Not elastic FLAME — see zeiroh/EVAL.md.
   """
 
   def init(opts) when is_list(opts) do
