@@ -66,7 +66,8 @@ defmodule Dusk.MixProject do
         "GitHub" => @source_url,
         "Sponsor" => "https://github.com/sponsors/niranjanaryan",
         "Gale" => "https://github.com/niranjanaryan/gale",
-        "Ingot" => "https://github.com/niranjanaryan/ingot"
+        "Ingot" => "https://github.com/niranjanaryan/ingot",
+        "Stow" => "https://github.com/niranjanaryan/stow"
       },
       files:
         ~w(lib native/zig native/rust/src native/rust/Cargo.toml Makefile mix.exs README.md LICENSE CHANGELOG.md FUNDING.md HASH.md .formatter.exs)
