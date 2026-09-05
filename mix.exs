@@ -33,6 +33,7 @@ defmodule Dusk.MixProject do
       {:telemetry, "~> 1.0"},
       {:zenohex, "~> 0.10", optional: true},
       {:libcluster, "~> 3.5", optional: true},
+      {:flame, "~> 0.5", optional: true},
       {:ex_doc, "~> 0.38", only: :dev, runtime: false}
     ]
   end

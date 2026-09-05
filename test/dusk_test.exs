@@ -27,4 +27,31 @@ defmodule DuskTest do
     assert {:error, :backend_not_loaded} = Dusk.Zenoh.put("dusk/x", "hi")
     Supervisor.stop(pid)
   end
+
+  test "libcluster Zenoh strategy starts" do
+    {:ok, pid} =
+      Dusk.Strategy.Zenoh.start_link(
+        topology: :dusk,
+        config: [interval: 60_000, nodes: []]
+      )
+
+    assert Process.alive?(pid)
+    GenServer.stop(pid)
+  end
+
+  test "FLAME backend boots and runs a function" do
+    {:ok, state} = Dusk.FLAME.Backend.init(live: false)
+    {:ok, _term, state} = Dusk.FLAME.Backend.remote_boot(state)
+    parent = self()
+
+    assert {:ok, {pid, ref}} =
+             Dusk.FLAME.Backend.remote_spawn_monitor(state, fn ->
+               send(parent, :dusk_ran)
+               :ok
+             end)
+
+    assert is_pid(pid)
+    assert is_reference(ref)
+    assert_receive :dusk_ran, 1_000
+  end
 end
