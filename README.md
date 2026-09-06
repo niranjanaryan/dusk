@@ -1,5 +1,11 @@
 # Dusk
 
+[![Hex.pm](https://img.shields.io/hexpm/v/dusk.svg)](https://hex.pm/packages/dusk)
+[![Hexdocs](https://img.shields.io/badge/hex-docs-purple.svg)](https://hexdocs.pm/dusk)
+[![CI](https://github.com/niranjanaryan/dusk/actions/workflows/ci.yml/badge.svg)](https://github.com/niranjanaryan/dusk/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Sponsor](https://img.shields.io/badge/sponsor-GitHub-ea4aaa.svg)](https://github.com/sponsors/niranjanaryan)
+
 Zenoh **brokered** cluster for Elixir. Short name, horizon-at-sundown.
 
 ```

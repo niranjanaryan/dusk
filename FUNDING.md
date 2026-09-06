@@ -1,5 +1,5 @@
-# Funding
+# GitHub Sponsors
 
-GitHub Sponsors: [github.com/sponsors/niranjanaryan](https://github.com/sponsors/niranjanaryan)
+Configured for **[@niranjanaryan](https://github.com/niranjanaryan)** via `.github/FUNDING.yml`.
 
-See Gale’s `FUNDING.md` for signup. Same account.
+https://github.com/sponsors/niranjanaryan

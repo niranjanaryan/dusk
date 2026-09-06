@@ -88,6 +88,7 @@ defmodule Dusk.FLAME.Backend do
 
   defp start_overlay(:iroh, opts), do: start_iroh(opts)
   defp start_overlay(:zenoh, opts), do: start_zenoh(opts)
+
   defp start_overlay(:both, opts) do
     start_iroh(opts)
     start_zenoh(opts)
