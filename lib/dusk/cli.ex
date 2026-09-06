@@ -13,7 +13,10 @@ defmodule Dusk.CLI do
     dusk nif
     dusk version
 
-  Install: mix dusk.install   (escript → ~/.local/bin/dusk)
+  Install: mix dusk.install
+    Linux/macOS: ~/.local/bin
+    Windows:     %LOCALAPPDATA%\\elixcoder\\bin
+    Override:    ELIXCODER_BIN
   """
 
   def main(args), do: main(args, halt: !mix?())

@@ -83,6 +83,10 @@ defmodule DuskTest do
     GenServer.stop(i)
   end
 
+  test "CLI install paths" do
+    assert is_binary(Dusk.CLI.Paths.bin_dir())
+  end
+
   test "CLI help and backends" do
     assert :ok = Dusk.CLI.main(["--help"], halt: false)
     assert :ok = Dusk.CLI.main(["version"], halt: false)

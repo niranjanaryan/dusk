@@ -17,16 +17,20 @@ defmodule Dusk.Native do
   end
 
   defp nif_candidates do
+    _ = Code.ensure_loaded(Dusk.CLI.Paths)
+
     app =
       case :code.priv_dir(:dusk) do
         {:error, _} -> []
         dir -> [Path.join(dir, "dusk_nif")]
       end
 
-    home = Path.join(Path.expand("~/.dusk/priv"), "dusk_nif")
     env = System.get_env("DUSK_PRIV")
     env = if env, do: [Path.join(env, "dusk_nif")], else: []
-    app ++ env ++ [home] ++ [Path.expand("../../priv/dusk_nif", __DIR__)]
+
+    app ++
+      env ++
+      Dusk.CLI.Paths.nif_dirs(:dusk, "dusk_nif") ++ [Path.expand("../../priv/dusk_nif", __DIR__)]
   end
 
   def key_match(_pat, _key), do: :erlang.nif_error(:nif_not_loaded)

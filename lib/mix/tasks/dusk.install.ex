@@ -1,7 +1,7 @@
 defmodule Mix.Tasks.Dusk.Install do
-  @moduledoc "Build escript + NIFs and install `dusk` to ~/.local/bin."
+  @moduledoc "Build escript + NIFs and install `dusk` for Linux, macOS, and Windows."
   use Mix.Task
-  @shortdoc "Install the dusk CLI"
+  @shortdoc "Install the dusk CLI (all OS)"
 
   @impl Mix.Task
   def run(_args) do
@@ -9,23 +9,20 @@ defmodule Mix.Tasks.Dusk.Install do
     Mix.Task.run("compile")
     Mix.Task.run("escript.build")
 
-    bin_dir = Path.expand("~/.local/bin")
-    priv_dir = Path.expand("~/.dusk/priv")
-    File.mkdir_p!(bin_dir)
-    File.mkdir_p!(priv_dir)
+    dest = Dusk.CLI.Paths.install_escript("dusk")
+    priv = Dusk.CLI.Paths.copy_priv(:dusk)
+    Mix.shell().info("installed #{dest}")
+    Mix.shell().info("NIFs in #{priv}")
+    Mix.shell().info(path_hint())
+  end
 
-    escript = Path.join(File.cwd!(), "dusk")
-    File.cp!(escript, Path.join(bin_dir, "dusk"))
-    File.chmod!(Path.join(bin_dir, "dusk"), 0o755)
+  defp path_hint do
+    dir = Dusk.CLI.Paths.bin_dir()
 
-    app_priv = Path.join(Mix.Project.app_path(), "priv")
-
-    if File.dir?(app_priv) do
-      File.cp_r!(app_priv, priv_dir)
+    if Dusk.CLI.Paths.windows?() do
+      "add #{dir} to PATH (Windows: System Properties → Environment Variables)"
+    else
+      "ensure #{dir} is on PATH"
     end
-
-    Mix.shell().info("installed #{Path.join(bin_dir, "dusk")}")
-    Mix.shell().info("NIFs in #{priv_dir}")
-    Mix.shell().info("ensure #{bin_dir} is on PATH")
   end
 end

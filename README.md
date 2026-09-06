@@ -22,7 +22,9 @@ zeiroh — Phoenix FLAME overlay
 ```
 
 ```bash
-mix dusk.install          # ~/.local/bin/dusk  +  ~/.dusk/priv NIFs
+mix dusk.install
+# Linux/macOS: ~/.local/bin    Windows: %LOCALAPPDATA%\elixcoder\bin
+# needs escript (Erlang/OTP) on PATH
 dusk backends
 dusk match "a/**" a/b
 dusk hash ./file --algo blake3
