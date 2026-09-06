@@ -12,6 +12,7 @@ defmodule Dusk.MixProject do
       start_permanent: Mix.env() == :prod,
       deps: deps(),
       aliases: aliases(),
+      escript: [main_module: Dusk.CLI, name: "dusk"],
       docs: docs(),
       package: package(),
       description: description(),
@@ -63,7 +64,8 @@ defmodule Dusk.MixProject do
   defp aliases do
     [
       test: ["dusk.build", "test"],
-      bench: ["dusk.build", "dusk.bench"]
+      bench: ["dusk.build", "dusk.bench"],
+      "dusk.cli": ["dusk.build", "escript.build"]
     ]
   end
 

@@ -19,7 +19,19 @@ zeiroh — Phoenix FLAME overlay
 ```elixir
 {:dusk, "~> 0.1"}
 {:zenohex, "~> 0.10"}
+```
 
+```bash
+mix dusk.install          # ~/.local/bin/dusk  +  ~/.dusk/priv NIFs
+dusk backends
+dusk match "a/**" a/b
+dusk hash ./file --algo blake3
+dusk put ./file
+```
+
+Inside a Mix project: `mix dusk backends`.
+
+```elixir
 {Dusk, connect: "tcp/127.0.0.1:7447", key: "dusk/cluster/**"}
 
 {Dusk, iroh: [alpns: ["dusk/1"]], zenoh: [connect: "tcp/127.0.0.1:7447"]}

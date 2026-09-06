@@ -4,15 +4,29 @@ defmodule Dusk.Native do
   @on_load :load_nif
 
   def load_nif do
-    path =
-      case :code.priv_dir(:dusk) do
-        {:error, _} -> Path.expand("../../priv/dusk_nif", __DIR__)
-        dir -> Path.join(dir, "dusk_nif")
+    Enum.find_value(nif_candidates(), fn path ->
+      case :erlang.load_nif(String.to_charlist(path), 0) do
+        :ok -> true
+        {:error, _} -> false
       end
+    end)
 
-    :erlang.load_nif(String.to_charlist(path), 0)
+    :ok
   rescue
     _ -> :ok
+  end
+
+  defp nif_candidates do
+    app =
+      case :code.priv_dir(:dusk) do
+        {:error, _} -> []
+        dir -> [Path.join(dir, "dusk_nif")]
+      end
+
+    home = Path.join(Path.expand("~/.dusk/priv"), "dusk_nif")
+    env = System.get_env("DUSK_PRIV")
+    env = if env, do: [Path.join(env, "dusk_nif")], else: []
+    app ++ env ++ [home] ++ [Path.expand("../../priv/dusk_nif", __DIR__)]
   end
 
   def key_match(_pat, _key), do: :erlang.nif_error(:nif_not_loaded)

@@ -83,6 +83,13 @@ defmodule DuskTest do
     GenServer.stop(i)
   end
 
+  test "CLI help and backends" do
+    assert :ok = Dusk.CLI.main(["--help"], halt: false)
+    assert :ok = Dusk.CLI.main(["version"], halt: false)
+    assert :ok = Dusk.CLI.main(["backends"], halt: false)
+    assert :ok = Dusk.CLI.main(["match", "a/**", "a/b"], halt: false)
+  end
+
   test "FLAME backend boots and runs a function" do
     {:ok, state} = Dusk.FLAME.Backend.init(live: false)
     {:ok, _term, state} = Dusk.FLAME.Backend.remote_boot(state)
