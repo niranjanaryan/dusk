@@ -10,9 +10,10 @@ Zenoh **brokered** cluster for Elixir. Short name, horizon-at-sundown.
 
 ```
 gale   — Phoenix HTTP/3
-ingot  — Iroh + Zenoh
+ingot  — Iroh + Zenoh (Hex: `ingot_cluster`)
 dusk   — Zenoh + Iroh
 orian  — BLAKE3 / S3 / S5 storage
+zeiroh — Phoenix FLAME overlay
 ```
 
 ```elixir
@@ -54,7 +55,7 @@ config :flame, :backend, {Dusk.FLAME.Backend, overlay: :both, live: false}
 ```
 
 **Limits:** local spawn loop, not elastic FLAME (`FLAME.Terminator` /
-remote boot). Eval: [zeiroh/EVAL.md](../zeiroh/EVAL.md). Scaling:
-[zeiroh/SCALING.md](../zeiroh/SCALING.md).
+remote boot). Eval: [EVAL.md](https://github.com/niranjanaryan/zeiroh/blob/main/EVAL.md). Scaling:
+[SCALING.md](https://github.com/niranjanaryan/zeiroh/blob/main/SCALING.md).
 
 Storage: `Dusk.Storage.put/2` (`:memory`, `:s3`, `:s5`). Hashes: [HASH.md](HASH.md).
