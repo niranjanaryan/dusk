@@ -12,6 +12,17 @@ Hi everyone,
 
 I’m happy to announce the first public release of **Dusk** — a Zenoh + Iroh cluster library for Elixir with BLAKE3 hashing, S3/S5 storage, and a CLI.
 
+Dusk is part of a small suite of packages for distributed Elixir:
+
+```
+gale        — Phoenix HTTP/3
+ingot_cluster — Iroh + Zenoh cluster / libcluster
+dusk        — Zenoh-first cluster
+orian       — BLAKE3 / S3 / S5 storage
+zeiroh      — Phoenix FLAME overlay
+crucible    — boot the machine (local, docker, Fly/K8s/EC2)
+```
+
 **Why Dusk?**
 - **Cluster**: plug-and-play Zenoh or Iroh discovery for `libcluster`.
 - **Storage**: `:memory`, `:s3`, `:s5` — defers to [Orian](https://github.com/niranjanaryan/orian) when loaded.
