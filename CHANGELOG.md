@@ -9,4 +9,4 @@ First public Hex release.
 * Phoenix FLAME: `Dusk.FLAME.Backend`
 * Zig dirty-CPU NIF: key_match, BLAKE3, XXH3
 * S3/S5 storage; defers to Orian when loaded
-* `dusk` CLI (`mix dusk.install`, Linux/macOS/Windows)
+* `dusk` CLI (`mix dusk.binary` Burrito single file; else escript)

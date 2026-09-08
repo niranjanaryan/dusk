@@ -13,6 +13,7 @@ defmodule Dusk.MixProject do
       deps: deps(),
       aliases: aliases(),
       escript: [main_module: Dusk.CLI, name: "dusk"],
+      releases: releases(),
       docs: docs(),
       package: package(),
       description: description(),
@@ -35,7 +36,8 @@ defmodule Dusk.MixProject do
       {:zenohex, "~> 0.10", optional: true},
       {:libcluster, "~> 3.5", optional: true},
       {:flame, "~> 0.5", optional: true},
-      {:ex_doc, "~> 0.38", only: :dev, runtime: false}
+      {:ex_doc, "~> 0.38", only: :dev, runtime: false},
+      {:burrito, "~> 1.6", optional: true, runtime: false}
     ]
   end
 
@@ -66,6 +68,29 @@ defmodule Dusk.MixProject do
       test: ["dusk.build", "test"],
       bench: ["dusk.build", "dusk.bench"],
       "dusk.cli": ["dusk.build", "escript.build"]
+    ]
+  end
+
+  def wrap(%Mix.Release{} = release) do
+    if Code.ensure_loaded?(Burrito), do: Burrito.wrap(release), else: release
+  end
+
+  defp releases do
+    [
+      dusk: [
+        steps: [:assemble, &__MODULE__.wrap/1],
+        burrito: [targets: burrito_targets()]
+      ]
+    ]
+  end
+
+  defp burrito_targets do
+    [
+      macos: [os: :darwin, cpu: :x86_64, skip_nifs: true],
+      macos_silicon: [os: :darwin, cpu: :aarch64, skip_nifs: true],
+      linux: [os: :linux, cpu: :x86_64, skip_nifs: true],
+      linux_aarch64: [os: :linux, cpu: :aarch64, skip_nifs: true],
+      windows: [os: :windows, cpu: :x86_64, skip_nifs: true]
     ]
   end
 

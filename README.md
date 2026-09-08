@@ -5,6 +5,16 @@
 [![CI](https://github.com/niranjanaryan/dusk/actions/workflows/ci.yml/badge.svg)](https://github.com/niranjanaryan/dusk/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Sponsor](https://img.shields.io/badge/sponsor-GitHub-ea4aaa.svg)](https://github.com/sponsors/niranjanaryan)
+[![Hex.pm downloads](https://img.shields.io/hexpm/dt/dusk.svg)](https://hex.pm/packages/dusk)
+
+## Funding
+
+If you find Dusk useful, please consider sponsoring to support ongoing development:
+
+- **[GitHub Sponsors](https://github.com/sponsors/niranjanaryan)** — direct support
+- See [FUNDING.md](FUNDING.md) for related projects and why funding matters.
+
+---
 
 Zenoh **brokered** cluster for Elixir. Short name, horizon-at-sundown.
 
@@ -23,8 +33,9 @@ zeiroh — Phoenix FLAME overlay
 
 ```bash
 mix dusk.install
+# prefers a Burrito single binary (ERTS inside); else Mix escript
+# mix dusk.binary   # burrito_out/dusk_<os>
 # Linux/macOS: ~/.local/bin    Windows: %LOCALAPPDATA%\elixcoder\bin
-# needs escript (Erlang/OTP) on PATH
 dusk backends
 dusk match "a/**" a/b
 dusk hash ./file --algo blake3

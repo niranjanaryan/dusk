@@ -8,3 +8,4 @@ erl_crash.dump
 /priv/*.so
 /native/rust/target/
 /dusk
+/burrito_out/
