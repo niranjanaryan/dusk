@@ -12,6 +12,9 @@ defmodule Dusk.CLI do
     dusk put  FILE
     dusk nif
     dusk version
+    dusk stacks peers
+    dusk stacks relay-status
+    dusk flame --overlay stacks
 
   Install: mix dusk.install
     Linux/macOS: ~/.local/bin
@@ -89,6 +92,28 @@ defmodule Dusk.CLI do
   defp dispatch(["nif" | _], _) do
     info("nif=#{Dusk.nif_loaded?()}")
     :ok
+  end
+
+  defp dispatch(["stacks", "peers" | _], _) do
+    peers = Dusk.Stacks.discover_peers()
+    info(inspect(peers, pretty: true))
+    :ok
+  end
+
+  defp dispatch(["stacks", "relay-status" | _], _) do
+    {:ok, session} = Dusk.Stacks.relay_status_subscriber()
+
+    info("Subscribed to stacks/sbtc/relay/status (Ctrl+C to exit)")
+
+    # Keep process alive and print messages
+    :timer.sleep(:infinity)
+  end
+
+  defp dispatch(["flame", "--overlay", "stacks" | _], _) do
+    info("Starting FLAME overlay for Stacks...")
+    {:ok, _pid} = Dusk.Stacks.start_link(overlay: :stacks, backend: :iroh)
+    info("FLAME Stacks overlay started")
+    :timer.sleep(:infinity)
   end
 
   defp dispatch(_, _) do
