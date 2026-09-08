@@ -103,7 +103,7 @@ defmodule Dusk.MixProject do
         "GitHub" => @source_url,
         "Sponsor" => "https://github.com/sponsors/niranjanaryan",
         "Gale" => "https://github.com/niranjanaryan/gale",
-        "Ingot" => "https://github.com/niranjanaryan/ingot",
+        "IngotCluster" => "https://github.com/niranjanaryan/ingot_cluster",
         "Orian" => "https://github.com/niranjanaryan/orian"
       },
       files:

@@ -9,7 +9,7 @@ Support the development of Dusk and related projects.
 ## Related Projects
 
 - [Gale](https://github.com/niranjanaryan/gale) — Phoenix HTTP/3
-- [Ingot](https://github.com/niranjanaryan/ingot) — Iroh + Zenoh (`:ingot_cluster` on Hex)
+- [IngotCluster](https://github.com/niranjanaryan/ingot_cluster) — Iroh + Zenoh (`:ingot_cluster` on Hex)
 - [Orian](https://github.com/niranjanaryan/orian) — BLAKE3 / S3 / S5 storage
 - [Zeiroh](https://github.com/niranjanaryan/zeiroh) — Phoenix FLAME overlay
 

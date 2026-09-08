@@ -3,7 +3,7 @@ defmodule Dusk do
   Cluster over **Zenoh** (`zenohd`) and **Iroh** (iron / P2P QUIC).
 
   HTTP/3 is [Gale](https://github.com/niranjanaryan/gale).
-  Twin dual-overlay package: [Ingot](https://github.com/niranjanaryan/ingot).
+  Twin dual-overlay package: [IngotCluster](https://github.com/niranjanaryan/ingot_cluster).
 
       {Dusk, connect: "tcp/127.0.0.1:7447", key: "dusk/cluster/**"}
 
